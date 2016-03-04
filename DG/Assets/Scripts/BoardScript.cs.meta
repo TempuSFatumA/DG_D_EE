@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 8f7478035c1587b4eace5298944883b8
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - dice_prefab: {instanceID: 0}
+  - token_prefab: {instanceID: 0}
+  - deck_prefab: {instanceID: 0}
+  - silver_coin_prefab: {instanceID: 0}
+  - gold_coin_prefab: {fileID: 100000, guid: e92c1b0d93952c04baf0d1d15da87fe0, type: 2}
+  - charge_prefab: {fileID: 100002, guid: cf96ca105b086f04d8a8bcd5c17b6838, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
