@@ -2,7 +2,15 @@ using UnityEngine;
 using System.Collections;
 
 public class MainCameraScript : MonoBehaviour {
-	Quaternion old_rotation;
+
+    public GameObject topBoundary;
+    public GameObject bottomBoundary;
+    public GameObject rightBoundary;
+    public GameObject leftBoundary;
+    public GUIText text1;
+    public GUIText text2;
+
+    Quaternion old_rotation;
 	float old_fov;
 	Quaternion target_rotation;
 	float target_fov;
@@ -12,11 +20,11 @@ public class MainCameraScript : MonoBehaviour {
 	const float ZOOM_SPEED = 10.0f;
 	const float ZOOM_FOV = 0.25f;
 	const float PAN_SPEED = 10.0f;
-	
+    
 	// Use this for initialization
 	void Start () {
 		old_rotation = transform.rotation;
-		old_fov = camera.fov;
+        old_fov = camera.fov;
 		zoomed = false;
 		zoom_amount = 0.0f;
 		int width = Screen.width;
@@ -47,23 +55,44 @@ public class MainCameraScript : MonoBehaviour {
 			}
 		}
 		if(zoomed){
-			if(Input.GetKey("d")){
+            Ray ray;
+            RaycastHit[] hits;
+            bool isOnBottom = false;
+            bool isOnTop = false;
+            bool isOnLeft = false;
+            bool isOnRight = false;
+
+            ray = camera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+            hits = Physics.RaycastAll(ray);
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform.gameObject == rightBoundary)
+                    isOnRight = true;
+                if (hits[i].transform.gameObject == leftBoundary)
+                    isOnLeft = true;
+                if (hits[i].transform.gameObject == topBoundary)
+                    isOnTop = true;
+                if (hits[i].transform.gameObject == bottomBoundary)
+                    isOnBottom = true;
+            }
+            
+            if (Input.GetKey("d") && !isOnRight) {
 				Quaternion rotate = Quaternion.AngleAxis(Time.deltaTime * PAN_SPEED, old_rotation * new Vector3(0,1,0));
 				target_rotation = rotate * target_rotation;
-			}
-			if(Input.GetKey("a")){
+            }
+            if (Input.GetKey("a") && !isOnLeft) {
 				Quaternion rotate = Quaternion.AngleAxis(-Time.deltaTime * PAN_SPEED, old_rotation * new Vector3(0,1,0));
 				target_rotation = rotate * target_rotation;
-			}
-			if(Input.GetKey("s")){
+            }
+            if (Input.GetKey("s") && !isOnBottom) {
 				Quaternion rotate = Quaternion.AngleAxis(Time.deltaTime * PAN_SPEED, old_rotation * new Vector3(1,0,0));
 				target_rotation = rotate * target_rotation;
-			}
-			if(Input.GetKey("w")){
+            }
+            if (Input.GetKey("w") &&  !isOnTop) {
 				Quaternion rotate = Quaternion.AngleAxis(-Time.deltaTime * PAN_SPEED, old_rotation * new Vector3(1,0,0));
 				target_rotation = rotate * target_rotation;
-			}
-		}
+            }
+       	}
 		if(zoomed){	
 			zoom_amount = Mathf.Min(1.0f, zoom_amount + Time.deltaTime * ZOOM_SPEED);
 		} else {

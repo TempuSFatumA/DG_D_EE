@@ -113,7 +113,7 @@ public class NetUIScript : MonoBehaviour {
 			SetState(State.NONE);
 		}
 		ConsoleScript.Log("Server initialized");
-		int player_id = int.Parse(Network.player.ToString());
+        int player_id = int.Parse(Network.player.ToString());
 		TellServerPlayerName(player_name_);
 		Network.Instantiate(board_prefab, GameObject.Find("board_spawn").transform.position, GameObject.Find("board_spawn").transform.rotation,0);
 		int count = 0;
