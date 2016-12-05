@@ -7,8 +7,8 @@ public class MainCameraScript : MonoBehaviour {
     public GameObject bottomBoundary;
     public GameObject rightBoundary;
     public GameObject leftBoundary;
-    public GUIText text1;
-    public GUIText text2;
+    //public GUIText text1;
+    //public GUIText text2;
 
     Quaternion old_rotation;
 	float old_fov;
